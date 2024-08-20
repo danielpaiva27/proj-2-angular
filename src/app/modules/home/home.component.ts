@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { AuthResponse } from 'src/app/models/interfaces/user/auth/AuthResponse';
 import { CookieService } from 'ngx-cookie-service';
 import { UserService } from './../../services/user/user.service';
@@ -29,7 +30,8 @@ export class HomeComponent {
   constructor(
     private formBuilder: FormBuilder,
     private UserService: UserService,
-    private CookieService: CookieService
+    private CookieService: CookieService,
+    private MessageService: MessageService
   ) {}
 
   onSubmitLoginForm(): void {
@@ -39,11 +41,27 @@ export class HomeComponent {
         next: (response) => {
           if(response) {
             this.CookieService.set('USER_DATA', response.token);
-            alert('LOGIN EFETUADO');
             this.loginForm.reset();
+            this.MessageService.add({
+              severity: 'success',
+              summary: 'sucesso',
+              detail: `bem vindo de volta ${response.name}`,
+              life: 2000,
+
+            })
           }
         },
-        error: (err) => console.log(err)
+        error: (err) => {
+
+          this.MessageService.add({
+            severity: "error",
+            summary: "error",
+            detail: "erro ao logar",
+            life:2000
+          })
+
+          console.log(err)
+        }
       })
     }
   }
@@ -54,12 +72,29 @@ export class HomeComponent {
       .subscribe({
         next:(response) => {
           if(response){
-            alert('usuario criado com sucesso');
             this.sigupForm.reset();
             this.loginCard = true
+            this.MessageService.add({
+              severity: "success",
+              detail: "Sucesso",
+              summary: "você acaba de criar o usuario com sucesso",
+              life: 2000
+            })
           }
         },
-        error: (err) => console.log(err)
+        error: (err) => {
+
+          this.MessageService.add({
+            severity: 'error',
+            summary: 'error',
+            detail: 'error ao criar usuario',
+            life: 2000,
+
+          })
+
+
+
+          console.log(err)}
       })
     }
   }
