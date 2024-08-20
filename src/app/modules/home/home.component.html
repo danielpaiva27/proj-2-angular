@@ -30,7 +30,7 @@
         </span>
       </p-card>
       </form>
-      <form [formGroup]="siginForm" (ngSubmit)="onSubmitSiginForm()">
+      <form [formGroup]="sigupForm" (ngSubmit)="onSubmitSiginForm()">
         <p-card
         styleClass="mt-10"
         header="Criar conta"
@@ -51,7 +51,7 @@
           pButton
           pRipple
           label="Criar conta"
-          [disabled]="!this.siginForm.valid"
+          [disabled]="!this.sigupForm.valid"
           ></button>
         </div>
         <span
