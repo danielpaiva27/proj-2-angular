@@ -14,6 +14,7 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
+    //não entendi essa parte de baixo
     path: 'dashboard',
     loadChildren: () =>  import('./modules/dashboard/dashboard.module').then(
       (m) => m.DashboardModule
