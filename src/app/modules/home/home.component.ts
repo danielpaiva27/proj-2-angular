@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SignupUserRequest } from 'src/app/models/interfaces/user/SignupUserRequest';
 import { AuthRequest } from 'src/app/models/interfaces/user/auth/AuthRequest';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +32,8 @@ export class HomeComponent {
     private formBuilder: FormBuilder,
     private UserService: UserService,
     private CookieService: CookieService,
-    private MessageService: MessageService
+    private MessageService: MessageService,
+    private router: Router
   ) {}
 
   onSubmitLoginForm(): void {
@@ -40,8 +42,10 @@ export class HomeComponent {
       .subscribe({
         next: (response) => {
           if(response) {
-            this.CookieService.set('USER_DATA', response.token);
+            this.CookieService.set('USER_INFO', response?.token);
             this.loginForm.reset();
+            this.router.navigate(['/dashboard']);
+
             this.MessageService.add({
               severity: 'success',
               summary: 'sucesso',
